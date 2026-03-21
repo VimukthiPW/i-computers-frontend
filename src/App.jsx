@@ -3,6 +3,7 @@ import AdminPage from "./pages/admin"
 import HomePage from "./pages/home"
 import LoginPage from "./pages/login"
 import Card from "./components/caed"
+import Text from "./components/text"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/admin/*" element={<AdminPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/text" element={<Text/>} />
          </Routes>
     </div>
   )
