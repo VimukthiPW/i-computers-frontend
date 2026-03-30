@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import getFormattedPrice from "../../utils/price-format";
+import axios from "axios";
 
 const sampleProducts = [
   {
@@ -145,11 +146,25 @@ const sampleProducts = [
 
 ];
 
+//image
 
 
 export default function AdminProductsPage(){
 
     const [products, setProducts] = useState(sampleProducts);
+
+    useEffect(()=>{
+      const token = localStorage.getItem("token");
+
+    axios.get(import.meta.env.VITE_API_URL + "/products", {
+      headers: {
+        Authorization: "Bearer "+token
+      }
+    }).then((response)=>{
+      setProducts(response.data);
+      console.log(response.data);
+    })
+    }, []);
     
     return(
         <div className="w-full h-full overflow-y-scroll">
@@ -174,7 +189,7 @@ export default function AdminProductsPage(){
             <th className="px-4 py-3">Price</th>
             <th className="px-4 py-3">Label Price</th>
             <th className="px-4 py-3">Category</th>
-            <th className="px-4 py-3">Image</th>
+            <th className="px-4 py-3">Images</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Brand</th>
             <th className="px-4 py-3">Model</th>
@@ -213,7 +228,7 @@ export default function AdminProductsPage(){
 
               <td className="px-4 py-3">
                 <img
-                  src={item.image[0]}
+                  src={item.images?.[0]}
                   alt={item.name}
                   className="w-14 h-14 object-cover rounded-lg shadow"
                 />
